@@ -1,4 +1,4 @@
-import RegisterPage from './pages/RegisterPage';
+import RegisterPage from './pages/register/RegisterPage';
 import LanguageSwitcher from './components/LanguageSwitcher';
 
 function App() {
