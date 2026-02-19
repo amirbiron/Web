@@ -17,7 +17,7 @@ export default function RegisterPage() {
       <div className="w-full max-w-md">
         <div className="flex flex-col items-center mb-10">
           <img
-            src="https://raw.githubusercontent.com/amirbiron/Web/refs/heads/main/logo.png"
+            src="/logo.png"
             alt="Logo"
             className="h-24 object-contain mb-4"
             onError={(e) => {
