@@ -77,7 +77,7 @@ export default function RegisterPage() {
           />
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-8">
           {/* Username */}
           <FloatingInput
             label={t('register.username')}
