@@ -1,88 +1,42 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslation } from 'react-i18next';
 import { Upload } from 'lucide-react';
-import FloatingInput from '../components/FloatingInput';
-
-const createSchema = (t: (key: string) => string) =>
-  z
-    .object({
-      username: z
-        .string()
-        .min(1, t('register.errors.usernameRequired'))
-        .min(3, t('register.errors.usernameMin'))
-        .max(40, t('register.errors.usernameMax')),
-      email: z
-        .string()
-        .min(1, t('register.errors.emailRequired'))
-        .email(t('register.errors.emailInvalid')),
-      phone: z
-        .string()
-        .optional()
-        .refine(
-          (val) => !val || val.replace(/\D/g, '').length >= 8,
-          { message: t('register.errors.phoneMin') }
-        ),
-      password: z
-        .string()
-        .min(1, t('register.errors.passwordRequired'))
-        .min(6, t('register.errors.passwordMin'))
-        .max(40, t('register.errors.passwordMax')),
-      confirmPassword: z
-        .string()
-        .min(1, t('register.errors.confirmPasswordRequired')),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-      message: t('register.errors.passwordsMustMatch'),
-      path: ['confirmPassword'],
-    });
-
-type RegisterFormData = z.infer<ReturnType<typeof createSchema>>;
+import FloatingInput from '../components/base/FloatingInput';
+import { useRegisterForm } from './register/useRegisterForm';
 
 export default function RegisterPage() {
-  const { t } = useTranslation();
-  const [profilePicture, setProfilePicture] = useState<File | null>(null);
-
-  const schema = createSchema(t);
-
   const {
+    t,
     register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<RegisterFormData>({
-    resolver: zodResolver(schema),
-    mode: 'onSubmit',
-  });
-
-  const onSubmit = (data: RegisterFormData) => {
-    console.log('Form data:', data);
-    console.log('Profile picture:', profilePicture);
-  };
+    errors,
+    onSubmit,
+    profilePicture,
+    onProfilePictureChange,
+  } = useRegisterForm();
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        {/* Logo */}
-        <div className="flex justify-center mb-8">
+        <div className="flex flex-col items-center mb-10">
           <img
-            src="https://raw.githubusercontent.com/amirbiron/Web/refs/heads/main/logo.png"
+            src="/logo.png"
             alt="Logo"
-            className="h-24 object-contain"
+            className="h-24 object-contain mb-4"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.style.display = 'none';
             }}
           />
+          <h1 className="text-2xl font-semibold text-gray-800 text-center">
+            {t('register.title')}
+          </h1>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-8">
+        <form onSubmit={onSubmit} noValidate className="space-y-8">
           {/* Username */}
           <FloatingInput
             label={t('register.username')}
             type="text"
             {...register('username')}
+            required
             error={errors.username?.message}
           />
 
@@ -91,6 +45,7 @@ export default function RegisterPage() {
             label={t('register.email')}
             type="email"
             {...register('email')}
+            required
             error={errors.email?.message}
           />
 
@@ -107,6 +62,7 @@ export default function RegisterPage() {
             label={t('register.password')}
             type="password"
             {...register('password')}
+            required
             error={errors.password?.message}
           />
 
@@ -115,6 +71,7 @@ export default function RegisterPage() {
             label={t('register.confirmPassword')}
             type="password"
             {...register('confirmPassword')}
+            required
             error={errors.confirmPassword?.message}
           />
 
@@ -132,10 +89,7 @@ export default function RegisterPage() {
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={(e) => {
-                  const file = e.target.files?.[0] || null;
-                  setProfilePicture(file);
-                }}
+                onChange={onProfilePictureChange}
               />
             </label>
           </div>

@@ -3,10 +3,11 @@ import { useState, forwardRef, type InputHTMLAttributes } from 'react';
 interface FloatingInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: string;
+  required?: boolean;
 }
 
 const FloatingInput = forwardRef<HTMLInputElement, FloatingInputProps>(
-  ({ label, error, ...props }, ref) => {
+  ({ label, error, required, ...props }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
     const [hasValue, setHasValue] = useState(false);
 
@@ -25,11 +26,18 @@ const FloatingInput = forwardRef<HTMLInputElement, FloatingInputProps>(
               ${document.documentElement.dir === 'rtl' ? 'right-0' : 'left-0'}
             `}
           >
-            {label}
+            <span>
+              {label}
+              {required && (
+                <span className="text-red-500">{' *'}</span>
+              )}
+            </span>
           </label>
           <input
             ref={ref}
             {...props}
+            aria-required={required || undefined}
+            required={required}
             onFocus={(e) => {
               setIsFocused(true);
               props.onFocus?.(e);
@@ -47,7 +55,6 @@ const FloatingInput = forwardRef<HTMLInputElement, FloatingInputProps>(
               ${isFocused ? 'border-[#00bf63]' : 'border-gray-300'}
             `}
           />
-          {/* Animated underline */}
           <span
             className={`absolute bottom-0 h-[2px] bg-[#00bf63] transition-all duration-300 ease-out
               ${isFocused ? 'w-full' : 'w-0'}
@@ -55,9 +62,7 @@ const FloatingInput = forwardRef<HTMLInputElement, FloatingInputProps>(
             `}
           />
         </div>
-        {error && (
-          <p className="text-red-500 text-sm mt-1">{error}</p>
-        )}
+        {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
       </div>
     );
   }
