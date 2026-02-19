@@ -1,0 +1,27 @@
+{
+  "register": {
+    "title": "הרשמה",
+    "username": "שם משתמש",
+    "email": "אימייל",
+    "phone": "טלפון",
+    "password": "סיסמה",
+    "confirmPassword": "אימות סיסמה",
+    "profilePicture": "תמונת פרופיל",
+    "submit": "הרשמה",
+    "chooseFile": "בחר קובץ",
+    "noFileChosen": "לא נבחר קובץ",
+    "errors": {
+      "usernameRequired": "שם משתמש הוא שדה חובה",
+      "usernameMin": "שם משתמש חייב להכיל לפחות 3 תווים",
+      "usernameMax": "שם משתמש לא יכול להכיל יותר מ-40 תווים",
+      "emailRequired": "אימייל הוא שדה חובה",
+      "emailInvalid": "אימייל לא תקין",
+      "phoneMin": "טלפון חייב להכיל לפחות 8 מספרים",
+      "passwordRequired": "סיסמה היא שדה חובה",
+      "passwordMin": "סיסמה חייבת להכיל לפחות 6 תווים",
+      "passwordMax": "סיסמה לא יכולה להכיל יותר מ-40 תווים",
+      "confirmPasswordRequired": "אימות סיסמה הוא שדה חובה",
+      "passwordsMustMatch": "הסיסמאות אינן תואמות"
+    }
+  }
+}
