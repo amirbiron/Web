@@ -1,6 +1,6 @@
 import { Upload } from 'lucide-react';
-import FloatingInput from '../components/base/FloatingInput';
-import { useRegisterForm } from './register/useRegisterForm';
+import FloatingInput from '../../components/base/FloatingInput';
+import { useRegisterForm } from './useRegisterForm';
 
 export default function RegisterPage() {
   const {
@@ -19,7 +19,7 @@ export default function RegisterPage() {
           <img
             src="/logo.png"
             alt="Logo"
-            className="h-24 object-contain mb-4"
+            className="h-32 object-contain mb-4"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.style.display = 'none';
