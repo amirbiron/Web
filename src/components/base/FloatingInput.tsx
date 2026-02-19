@@ -14,7 +14,7 @@ const FloatingInput = forwardRef<HTMLInputElement, FloatingInputProps>(
     const isFloating = isFocused || hasValue;
 
     return (
-      <div className="relative w-full pt-4">
+      <div className="relative w-full pt-6">
         <div className="relative">
           <label
             className={`absolute transition-all duration-300 ease-out pointer-events-none
