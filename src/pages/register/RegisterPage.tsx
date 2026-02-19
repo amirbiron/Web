@@ -30,7 +30,7 @@ export default function RegisterPage() {
           </h1>
         </div>
 
-        <form onSubmit={onSubmit} noValidate className="space-y-10">
+        <form onSubmit={onSubmit} noValidate className="space-y-20">
           {/* Username */}
           <FloatingInput
             label={t('register.username')}
