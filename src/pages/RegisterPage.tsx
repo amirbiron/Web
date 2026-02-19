@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
 import { Upload } from 'lucide-react';
-import FloatingInput from '../components/FloatingInput';
+import FloatingInput from '../components/base/FloatingInput';
 
 const createSchema = (t: (key: string) => string) =>
   z
@@ -83,6 +83,7 @@ export default function RegisterPage() {
             label={t('register.username')}
             type="text"
             {...register('username')}
+            required
             error={errors.username?.message}
           />
 
@@ -91,6 +92,7 @@ export default function RegisterPage() {
             label={t('register.email')}
             type="email"
             {...register('email')}
+            required
             error={errors.email?.message}
           />
 
@@ -107,6 +109,7 @@ export default function RegisterPage() {
             label={t('register.password')}
             type="password"
             {...register('password')}
+            required
             error={errors.password?.message}
           />
 
@@ -115,6 +118,7 @@ export default function RegisterPage() {
             label={t('register.confirmPassword')}
             type="password"
             {...register('confirmPassword')}
+            required
             error={errors.confirmPassword?.message}
           />
 
