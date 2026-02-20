@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, type ChangeEvent } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
@@ -6,12 +6,13 @@ import axios from 'axios';
 
 import { createRegisterSchema, type RegisterFormData } from './registerSchema';
 
-const API_BASE = 'https://server-production-d633.up.railway.app';
+const API_BASE = import.meta.env.VITE_API_BASE ?? 'https://server-production-d633.up.railway.app';
 
 export function useRegisterForm() {
   const { t } = useTranslation();
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const previewUrlRef = useRef<string | null>(null);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [termsError, setTermsError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,22 +30,33 @@ export function useRegisterForm() {
     mode: 'onSubmit',
   });
 
+  useEffect(() => {
+    return () => {
+      if (previewUrlRef.current) {
+        URL.revokeObjectURL(previewUrlRef.current);
+      }
+    };
+  }, []);
+
   const onProfilePictureChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0] || null;
       setProfilePicture(file);
 
-      if (previewUrl) {
-        URL.revokeObjectURL(previewUrl);
+      if (previewUrlRef.current) {
+        URL.revokeObjectURL(previewUrlRef.current);
       }
 
       if (file) {
-        setPreviewUrl(URL.createObjectURL(file));
+        const url = URL.createObjectURL(file);
+        previewUrlRef.current = url;
+        setPreviewUrl(url);
       } else {
+        previewUrlRef.current = null;
         setPreviewUrl(null);
       }
     },
-    [previewUrl]
+    []
   );
 
   const toggleTerms = useCallback(() => {
