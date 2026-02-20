@@ -1,5 +1,6 @@
 import { Upload } from 'lucide-react';
 import FloatingInput from '../../components/base/FloatingInput';
+import TermsOfService from './TermsOfService';
 import { useRegisterForm } from './useRegisterForm';
 
 export default function RegisterPage() {
@@ -9,7 +10,13 @@ export default function RegisterPage() {
     errors,
     onSubmit,
     profilePicture,
+    previewUrl,
     onProfilePictureChange,
+    agreedToTerms,
+    toggleTerms,
+    termsError,
+    isSubmitting,
+    submitError,
   } = useRegisterForm();
 
   return (
@@ -19,7 +26,7 @@ export default function RegisterPage() {
           <img
             src="/logo.png"
             alt="Logo"
-            className="h-32 object-contain mb-4"
+            className="h-44 object-contain mb-4"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.style.display = 'none';
@@ -30,7 +37,11 @@ export default function RegisterPage() {
           </h1>
         </div>
 
-        <form onSubmit={onSubmit} noValidate className="space-y-8">
+        <form
+          onSubmit={onSubmit}
+          noValidate
+          className="space-y-8 bg-[#aaa] rounded-2xl p-6"
+        >
           {/* Username */}
           <FloatingInput
             label={t('register.username')}
@@ -77,10 +88,10 @@ export default function RegisterPage() {
 
           {/* Profile Picture Upload */}
           <div className="pt-2">
-            <label className="block text-sm text-gray-500 mb-2">
+            <label className="block text-sm text-gray-200 mb-2">
               {t('register.profilePicture')}
             </label>
-            <label className="flex items-center gap-2 cursor-pointer text-gray-600 hover:text-[#00bf63] transition-colors duration-200">
+            <label className="flex items-center gap-2 cursor-pointer text-gray-200 hover:text-[#00bf63] transition-colors duration-200">
               <Upload size={20} />
               <span className="text-sm">
                 {profilePicture ? profilePicture.name : t('register.chooseFile')}
@@ -92,18 +103,41 @@ export default function RegisterPage() {
                 onChange={onProfilePictureChange}
               />
             </label>
+            {previewUrl && (
+              <div className="mt-3">
+                <img
+                  src={previewUrl}
+                  alt={t('register.profilePicture')}
+                  className="w-24 h-24 rounded-full object-cover border-2 border-[#00bf63]"
+                />
+              </div>
+            )}
           </div>
+
+          {/* Terms of Service */}
+          <TermsOfService
+            agreed={agreedToTerms}
+            onToggle={toggleTerms}
+            error={termsError}
+          />
+
+          {/* Submit Error */}
+          {submitError && (
+            <p className="text-red-500 text-sm text-center">{submitError}</p>
+          )}
 
           {/* Submit Button */}
           <div className="flex justify-center pt-4">
             <button
               type="submit"
+              disabled={isSubmitting}
               className="w-[150px] py-2.5 bg-[#00bf63] text-white font-medium rounded-lg
                 transition-all duration-300 ease-in-out
                 hover:bg-[#00d970] hover:shadow-lg
-                active:scale-[0.98] cursor-pointer"
+                active:scale-[0.98] cursor-pointer
+                disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {t('register.submit')}
+              {isSubmitting ? t('register.submitting') : t('register.submit')}
             </button>
           </div>
         </form>

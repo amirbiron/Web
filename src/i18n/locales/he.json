@@ -8,8 +8,14 @@
     "confirmPassword": "אימות סיסמה",
     "profilePicture": "תמונת פרופיל",
     "submit": "הרשמה",
+    "submitting": "נרשם...",
     "chooseFile": "בחר קובץ",
     "noFileChosen": "לא נבחר קובץ",
+    "terms": {
+      "viewTerms": "תנאי שימוש ומדיניות פרטיות",
+      "agree": "אני מסכים/ה לתנאי השימוש ומדיניות הפרטיות",
+      "required": "יש לאשר את תנאי השימוש"
+    },
     "errors": {
       "usernameRequired": "שם משתמש הוא שדה חובה",
       "usernameMin": "שם משתמש חייב להכיל לפחות 3 תווים",
@@ -21,7 +27,8 @@
       "passwordMin": "סיסמה חייבת להכיל לפחות 6 תווים",
       "passwordMax": "סיסמה לא יכולה להכיל יותר מ-40 תווים",
       "confirmPasswordRequired": "אימות סיסמה הוא שדה חובה",
-      "passwordsMustMatch": "הסיסמאות אינן תואמות"
+      "passwordsMustMatch": "הסיסמאות אינן תואמות",
+      "submitFailed": "ההרשמה נכשלה. אנא נסה שוב."
     }
   }
 }

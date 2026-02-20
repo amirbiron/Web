@@ -8,8 +8,14 @@
     "confirmPassword": "Confirm Password",
     "profilePicture": "Profile Picture",
     "submit": "Register",
+    "submitting": "Registering...",
     "chooseFile": "Choose file",
     "noFileChosen": "No file chosen",
+    "terms": {
+      "viewTerms": "Terms of Service & Privacy Policy",
+      "agree": "I agree to the Terms of Service and Privacy Policy",
+      "required": "You must agree to the terms of service"
+    },
     "errors": {
       "usernameRequired": "Username is required",
       "usernameMin": "Username must be at least 3 characters",
@@ -21,7 +27,8 @@
       "passwordMin": "Password must be at least 6 characters",
       "passwordMax": "Password cannot exceed 40 characters",
       "confirmPasswordRequired": "Confirm password is required",
-      "passwordsMustMatch": "Passwords do not match"
+      "passwordsMustMatch": "Passwords do not match",
+      "submitFailed": "Registration failed. Please try again."
     }
   }
 }
