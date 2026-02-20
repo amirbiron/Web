@@ -21,7 +21,7 @@ const FloatingInput = forwardRef<HTMLInputElement, FloatingInputProps>(
               ${
                 isFloating
                   ? 'top-[-20px] text-[13px] text-[#00bf63]'
-                  : 'top-[8px] text-[16px] text-gray-400'
+                  : 'top-[8px] text-[16px] text-white'
               }
               ${document.documentElement.dir === 'rtl' ? 'right-0' : 'left-0'}
             `}
