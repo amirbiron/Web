@@ -32,7 +32,7 @@ export default function TermsOfService({
       <button
         type="button"
         onClick={() => setExpanded((prev) => !prev)}
-        className="flex items-center gap-1 text-sm text-white hover:text-[#008545] hover:underline cursor-pointer"
+        className="flex items-center gap-1 text-sm text-[#008545] hover:underline cursor-pointer"
       >
         {t('register.terms.viewTerms')}
         {expanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
