@@ -60,10 +60,8 @@ export function useRegisterForm() {
   );
 
   const toggleTerms = useCallback(() => {
-    setAgreedToTerms((prev) => {
-      if (!prev) setTermsError(false);
-      return !prev;
-    });
+    setTermsError(false);
+    setAgreedToTerms((prev) => !prev);
   }, []);
 
   const onSubmit = useMemo(
