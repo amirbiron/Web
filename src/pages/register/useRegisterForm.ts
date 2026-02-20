@@ -67,10 +67,13 @@ export function useRegisterForm() {
   }, []);
 
   const onSubmit = useMemo(
-    () =>
-      handleSubmit(async (data) => {
+    () => async (e?: React.BaseSyntheticEvent) => {
+      if (!agreedToTerms) {
+        setTermsError(true);
+      }
+
+      await handleSubmit(async (data) => {
         if (!agreedToTerms) {
-          setTermsError(true);
           return;
         }
 
@@ -95,7 +98,11 @@ export function useRegisterForm() {
             profilePicture: profilePictureUrl,
           });
 
-          localStorage.setItem('email', data.email);
+          try {
+            localStorage.setItem('email', data.email);
+          } catch {
+            // Storage failure is non-critical — account was created successfully
+          }
           setIsSuccess(true);
         } catch (err) {
           if (axios.isAxiosError(err) && err.response?.data?.message) {
@@ -106,7 +113,8 @@ export function useRegisterForm() {
         } finally {
           setIsSubmitting(false);
         }
-      }),
+      })(e);
+    },
     [handleSubmit, profilePicture, agreedToTerms, t]
   );
 
