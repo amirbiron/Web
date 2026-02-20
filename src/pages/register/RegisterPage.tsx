@@ -39,7 +39,7 @@ export default function RegisterPage() {
         </div>
 
         {isSuccess ? (
-          <div className="bg-[#aaa] rounded-2xl p-8 flex flex-col items-center gap-4 text-center">
+          <div className="bg-[#aaaaaa]/30 rounded-2xl p-8 flex flex-col items-center gap-4 text-center">
             <CheckCircle size={48} className="text-[#00bf63]" />
             <h2 className="text-xl font-semibold text-gray-800">
               {t('register.successTitle')}
@@ -50,7 +50,7 @@ export default function RegisterPage() {
         <form
           onSubmit={onSubmit}
           noValidate
-          className="space-y-8 bg-[#aaa] rounded-2xl p-6"
+          className="space-y-8 bg-[#aaaaaa]/30 rounded-2xl p-6"
         >
           {/* Username */}
           <FloatingInput
