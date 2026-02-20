@@ -1,4 +1,4 @@
-import { Upload } from 'lucide-react';
+import { Upload, CheckCircle } from 'lucide-react';
 import FloatingInput from '../../components/base/FloatingInput';
 import TermsOfService from './TermsOfService';
 import { useRegisterForm } from './useRegisterForm';
@@ -17,6 +17,7 @@ export default function RegisterPage() {
     termsError,
     isSubmitting,
     submitError,
+    isSuccess,
   } = useRegisterForm();
 
   return (
@@ -37,6 +38,15 @@ export default function RegisterPage() {
           </h1>
         </div>
 
+        {isSuccess ? (
+          <div className="bg-[#aaa] rounded-2xl p-8 flex flex-col items-center gap-4 text-center">
+            <CheckCircle size={48} className="text-[#00bf63]" />
+            <h2 className="text-xl font-semibold text-gray-800">
+              {t('register.successTitle')}
+            </h2>
+            <p className="text-gray-700">{t('register.successMessage')}</p>
+          </div>
+        ) : (
         <form
           onSubmit={onSubmit}
           noValidate
@@ -88,10 +98,10 @@ export default function RegisterPage() {
 
           {/* Profile Picture Upload */}
           <div className="pt-2">
-            <label className="block text-sm text-gray-200 mb-2">
+            <label className="block text-sm text-gray-700 mb-2">
               {t('register.profilePicture')}
             </label>
-            <label className="flex items-center gap-2 cursor-pointer text-gray-200 hover:text-[#00bf63] transition-colors duration-200">
+            <label className="flex items-center gap-2 cursor-pointer text-gray-700 hover:text-[#00bf63] transition-colors duration-200">
               <Upload size={20} />
               <span className="text-sm">
                 {profilePicture ? profilePicture.name : t('register.chooseFile')}
@@ -141,6 +151,7 @@ export default function RegisterPage() {
             </button>
           </div>
         </form>
+        )}
       </div>
     </div>
   );

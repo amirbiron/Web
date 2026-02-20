@@ -16,6 +16,7 @@ export function useRegisterForm() {
   const [termsError, setTermsError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const schema = useMemo(() => createRegisterSchema(t), [t]);
 
@@ -71,9 +72,7 @@ export function useRegisterForm() {
             const formData = new FormData();
             formData.append('file', profilePicture);
             const uploadRes = await axios.post(`${API_BASE}/upload`, formData);
-            if (uploadRes.status === 200) {
-              profilePictureUrl = uploadRes.data.url;
-            }
+            profilePictureUrl = uploadRes.data.url;
           }
 
           await axios.post(`${API_BASE}/auth/register`, {
@@ -85,6 +84,7 @@ export function useRegisterForm() {
           });
 
           localStorage.setItem('email', data.email);
+          setIsSuccess(true);
         } catch (err) {
           if (axios.isAxiosError(err) && err.response?.data?.message) {
             setSubmitError(err.response.data.message);
@@ -111,5 +111,6 @@ export function useRegisterForm() {
     termsError,
     isSubmitting,
     submitError,
+    isSuccess,
   };
 }

@@ -11,6 +11,8 @@
     "submitting": "Registering...",
     "chooseFile": "Choose file",
     "noFileChosen": "No file chosen",
+    "successTitle": "Registration Successful!",
+    "successMessage": "Your account has been created successfully.",
     "terms": {
       "viewTerms": "Terms of Service & Privacy Policy",
       "agree": "I agree to the Terms of Service and Privacy Policy",
