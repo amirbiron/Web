@@ -20,7 +20,7 @@ const FloatingInput = forwardRef<HTMLInputElement, FloatingInputProps>(
             className={`absolute transition-all duration-300 ease-out pointer-events-none
               ${
                 isFloating
-                  ? 'top-[-20px] text-[13px] text-[#00bf63]'
+                  ? 'top-[-20px] text-[13px] text-[#008545]'
                   : 'top-[8px] text-[16px] text-white'
               }
               ${document.documentElement.dir === 'rtl' ? 'right-0' : 'left-0'}
@@ -52,11 +52,11 @@ const FloatingInput = forwardRef<HTMLInputElement, FloatingInputProps>(
               props.onChange?.(e);
             }}
             className={`w-full py-2 bg-transparent border-b-2 outline-none text-gray-800 text-[16px] transition-colors duration-300
-              ${isFocused ? 'border-[#00bf63]' : 'border-gray-300'}
+              ${isFocused ? 'border-[#008545]' : 'border-gray-300'}
             `}
           />
           <span
-            className={`absolute bottom-0 h-[2px] bg-[#00bf63] transition-all duration-300 ease-out
+            className={`absolute bottom-0 h-[2px] bg-[#008545] transition-all duration-300 ease-out
               ${isFocused ? 'w-full' : 'w-0'}
               ${document.documentElement.dir === 'rtl' ? 'right-1/2 translate-x-1/2' : 'left-1/2 -translate-x-1/2'}
             `}
