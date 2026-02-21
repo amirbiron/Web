@@ -1,4 +1,4 @@
-import { Upload, CheckCircle } from 'lucide-react';
+import { Upload } from 'lucide-react';
 import FloatingInput from '../../components/base/FloatingInput';
 import TermsOfService from './TermsOfService';
 import { useRegisterForm } from './useRegisterForm';
@@ -17,7 +17,6 @@ export default function RegisterPage() {
     termsError,
     isSubmitting,
     submitError,
-    isSuccess,
   } = useRegisterForm();
 
   return (
@@ -38,15 +37,6 @@ export default function RegisterPage() {
           </h1>
         </div>
 
-        {isSuccess ? (
-          <div className="bg-[#aaaaaa]/30 rounded-2xl p-8 flex flex-col items-center gap-4 text-center">
-            <CheckCircle size={48} className="text-[#00bf63]" />
-            <h2 className="text-xl font-semibold text-gray-800">
-              {t('register.successTitle')}
-            </h2>
-            <p className="text-gray-700">{t('register.successMessage')}</p>
-          </div>
-        ) : (
         <form
           onSubmit={onSubmit}
           noValidate
@@ -151,7 +141,6 @@ export default function RegisterPage() {
             </button>
           </div>
         </form>
-        )}
       </div>
     </div>
   );
