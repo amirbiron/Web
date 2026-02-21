@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const API_BASE =
@@ -11,12 +11,13 @@ const CODE_LENGTH = 6;
 
 export function useVerifyForm() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const location = useLocation();
   const [digits, setDigits] = useState<string[]>(Array(CODE_LENGTH).fill(''));
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [codeError, setCodeError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const setInputRef = useCallback(
     (index: number) => (el: HTMLInputElement | null) => {
@@ -83,7 +84,11 @@ export function useVerifyForm() {
       return;
     }
 
-    const email = localStorage.getItem('email') ?? '';
+    // Router state is the primary source, localStorage is fallback
+    const email =
+      (location.state as { email?: string } | null)?.email ??
+      localStorage.getItem('email') ??
+      '';
 
     setIsSubmitting(true);
     setSubmitError(null);
@@ -95,7 +100,7 @@ export function useVerifyForm() {
       });
 
       localStorage.setItem('token', data.token);
-      navigate('/');
+      setIsSuccess(true);
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.data?.message) {
         setSubmitError(err.response.data.message);
@@ -105,7 +110,7 @@ export function useVerifyForm() {
     } finally {
       setIsSubmitting(false);
     }
-  }, [digits, t, navigate]);
+  }, [digits, t, location.state]);
 
   return {
     t,
@@ -118,5 +123,6 @@ export function useVerifyForm() {
     isSubmitting,
     submitError,
     codeError,
+    isSuccess,
   };
 }

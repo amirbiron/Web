@@ -100,9 +100,9 @@ export function useRegisterForm() {
           try {
             localStorage.setItem('email', data.email);
           } catch {
-            // Storage failure is non-critical — account was created successfully
+            // Storage failure is non-critical — email is also passed via router state
           }
-          navigate('/verify-email');
+          navigate('/verify-email', { state: { email: data.email } });
         } catch (err) {
           if (axios.isAxiosError(err) && err.response?.data?.message) {
             setSubmitError(err.response.data.message);

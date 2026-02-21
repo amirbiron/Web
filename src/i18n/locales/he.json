@@ -81,6 +81,8 @@
     "subtitle": "הזן את הקוד שנשלח אליך למייל",
     "submit": "אמת את החשבון שלך",
     "submitting": "מאמת...",
+    "successTitle": "החשבון אומת בהצלחה!",
+    "successMessage": "החשבון שלך אומת בהצלחה.",
     "errors": {
       "codeRequired": "יש להזין את כל 6 הספרות",
       "submitFailed": "האימות נכשל. אנא נסה שוב."
