@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ChangeEvent } f
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { createRegisterSchema, type RegisterFormData } from './registerSchema';
@@ -10,6 +11,7 @@ const API_BASE = import.meta.env.VITE_API_BASE ?? 'https://server-production-d63
 
 export function useRegisterForm() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const previewUrlRef = useRef<string | null>(null);
@@ -17,7 +19,6 @@ export function useRegisterForm() {
   const [termsError, setTermsError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [isSuccess, setIsSuccess] = useState(false);
 
   const schema = useMemo(() => createRegisterSchema(t), [t]);
 
@@ -101,7 +102,7 @@ export function useRegisterForm() {
           } catch {
             // Storage failure is non-critical — account was created successfully
           }
-          setIsSuccess(true);
+          navigate('/verify-email');
         } catch (err) {
           if (axios.isAxiosError(err) && err.response?.data?.message) {
             setSubmitError(err.response.data.message);
@@ -113,7 +114,7 @@ export function useRegisterForm() {
         }
       })(e);
     },
-    [handleSubmit, profilePicture, agreedToTerms, t]
+    [handleSubmit, profilePicture, agreedToTerms, t, navigate]
   );
 
   return {
@@ -129,6 +130,5 @@ export function useRegisterForm() {
     termsError,
     isSubmitting,
     submitError,
-    isSuccess,
   };
 }

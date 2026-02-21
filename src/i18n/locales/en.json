@@ -75,5 +75,15 @@
       "passwordsMustMatch": "Passwords do not match",
       "submitFailed": "Registration failed. Please try again."
     }
+  },
+  "verify": {
+    "title": "Please Verify Your Account",
+    "subtitle": "Enter the code sent to your email",
+    "submit": "Verify Your Account",
+    "submitting": "Verifying...",
+    "errors": {
+      "codeRequired": "Please enter all 6 digits",
+      "submitFailed": "Verification failed. Please try again."
+    }
   }
 }
