@@ -5,9 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import { API_BASE } from '../../config/api';
 import { createRegisterSchema, type RegisterFormData } from './registerSchema';
-
-const API_BASE = import.meta.env.VITE_API_BASE ?? 'https://server-production-d633.up.railway.app';
 
 export function useRegisterForm() {
   const { t } = useTranslation();

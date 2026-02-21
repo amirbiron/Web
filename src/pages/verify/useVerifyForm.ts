@@ -1,23 +1,42 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const API_BASE =
-  import.meta.env.VITE_API_BASE ??
-  'https://server-production-d633.up.railway.app';
+import { API_BASE } from '../../config/api';
 
 const CODE_LENGTH = 6;
 
 export function useVerifyForm() {
   const { t } = useTranslation();
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const email =
+    (location.state as { email?: string } | null)?.email ??
+    localStorage.getItem('email') ??
+    '';
+
   const [digits, setDigits] = useState<string[]>(Array(CODE_LENGTH).fill(''));
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [codeError, setCodeError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
+
+  // Redirect to registration if no email is available
+  useEffect(() => {
+    if (!email) {
+      navigate('/', { replace: true });
+    }
+  }, [email, navigate]);
+
+  // Navigate to home after successful verification
+  useEffect(() => {
+    if (!isSuccess) return;
+    const timer = setTimeout(() => navigate('/', { replace: true }), 2000);
+    return () => clearTimeout(timer);
+  }, [isSuccess, navigate]);
 
   const setInputRef = useCallback(
     (index: number) => (el: HTMLInputElement | null) => {
@@ -84,12 +103,6 @@ export function useVerifyForm() {
       return;
     }
 
-    // Router state is the primary source, localStorage is fallback
-    const email =
-      (location.state as { email?: string } | null)?.email ??
-      localStorage.getItem('email') ??
-      '';
-
     setIsSubmitting(true);
     setSubmitError(null);
 
@@ -110,7 +123,7 @@ export function useVerifyForm() {
     } finally {
       setIsSubmitting(false);
     }
-  }, [digits, t, location.state]);
+  }, [digits, t, email]);
 
   return {
     t,
